@@ -14,11 +14,8 @@ NIVEIS_VALIDOS = {"baixo", "medio", "alto"}
 
 
 class ErroAPI(Exception):
-    """Erro já com a mensagem pronta pra mostrar pro cidadão"""
-
-    def __init__(self, mensagem):
-        super().__init__(mensagem)
-        self.mensagem = mensagem
+    # o texto do erro já é a mensagem que aparece pro cidadão
+    pass
 
 
 @st.cache_resource
@@ -57,11 +54,7 @@ def analisar_mensagem(mensagem, canal, pede_dinheiro):
     dados = _chamar("POST", "/v1/analises", {"mensagem": mensagem, "canal": canal, "pede_dinheiro": pede_dinheiro})
 
     # confere se veio no formato esperado antes de mostrar
-    try:
-        ok = dados["analise"]["nivel_risco"] in NIVEIS_VALIDOS and dados["protocolo"] and dados["analise"]["tipo_golpe"]
-    except (KeyError, TypeError):
-        ok = False
-    if not ok:
+    if "protocolo" not in dados or dados.get("analise", {}).get("nivel_risco") not in NIVEIS_VALIDOS:
         raise ErroAPI("Recebemos uma resposta incompleta do serviço. Tente de novo.")
     return dados
 

@@ -30,7 +30,7 @@ def _pegar_cliente():
     if not config.OPENAI_API_KEY:
         raise ErroIA("OPENAI_API_KEY não configurada no .env")
     if _cliente is None:
-        _cliente = OpenAI(api_key=config.OPENAI_API_KEY, timeout=config.OPENAI_TIMEOUT, max_retries=1)
+        _cliente = OpenAI(api_key=config.OPENAI_API_KEY, timeout=config.OPENAI_TIMEOUT, max_retries=0)
     return _cliente
 
 

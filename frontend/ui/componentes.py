@@ -22,22 +22,18 @@ def rotulo_nivel(nivel):
 
 
 def cartao_risco(nivel, titulo, detalhe="", compacto=False):
-    """Cartão colorido com o nível de risco. compacto=True é a versão menor usada no histórico"""
+    # compacto=True é a versão menor usada no histórico
     n = NIVEIS[nivel]
     tamanho = "1.1rem" if compacto else "1.7rem"
-    frase = "" if compacto else f"<div style='font-size:1.05rem;margin-top:4px'>{n['frase']}</div>"
-    padding = "10px 14px" if compacto else "18px 20px"
-    # html montado sem espaço no começo das linhas, senão o markdown acha que é bloco de código
-    partes = [
-        f"<div role='status' aria-live='polite' style='border-left:8px solid {n['cor']}; background:{n['fundo']}; "
-        f"color:#1A1A1A; padding:{padding}; border-radius:8px; margin-bottom:10px'>",
-        f"<div style='font-size:{tamanho}; font-weight:700; color:{n['cor']}'>{n['icone']} {n['rotulo']}</div>",
-        frase,
-        f"<div style='margin-top:6px; font-weight:600'>{html.escape(titulo)}</div>",
-        f"<div style='font-size:0.9rem; color:#333333'>{html.escape(detalhe)}</div>",
-        "</div>",
-    ]
-    st.markdown("".join(partes), unsafe_allow_html=True)
+    frase = "" if compacto else f"<div>{n['frase']}</div>"
+    # html.escape porque o título vem da IA
+    st.markdown(
+        f"<div role='status' style='border-left:8px solid {n['cor']}; background:{n['fundo']}; color:#1A1A1A; "
+        f"padding:12px 16px; border-radius:8px; margin-bottom:10px'>"
+        f"<div style='font-size:{tamanho}; font-weight:700; color:{n['cor']}'>{n['icone']} {n['rotulo']}</div>"
+        f"{frase}<b>{html.escape(titulo)}</b><br><small>{html.escape(detalhe)}</small></div>",
+        unsafe_allow_html=True,
+    )
 
 
 def lista_com_icone(titulo, itens, icone, texto_vazio="Nada para mostrar aqui."):

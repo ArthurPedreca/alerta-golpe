@@ -54,7 +54,7 @@ def mostrar():
             try:
                 resultado = api_cliente.analisar_mensagem(mensagem.strip(), canal, PEDE_DINHEIRO[pede])
             except ErroAPI as erro:
-                componentes.caixa_erro(erro.mensagem)
+                componentes.caixa_erro(str(erro))
                 return
         if not sessao.adicionar(resultado):
             st.info("ℹ️ Você já tinha verificado essa mensagem. Mostrando o mesmo resultado, sem chamar a IA de novo.")

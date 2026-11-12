@@ -20,7 +20,7 @@ def mostrar():
     try:
         tipos = api_cliente.listar_tipos_golpe()
     except ErroAPI as erro:
-        componentes.caixa_erro(erro.mensagem)
+        componentes.caixa_erro(str(erro))
         tipos = []
     for tipo in tipos:
         with st.expander(tipo["tipo"]):
