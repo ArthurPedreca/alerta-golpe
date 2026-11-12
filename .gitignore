@@ -1,0 +1,8 @@
+.env
+__pycache__/
+*.pyc
+.venv/
+venv/
+backend/dados/*.jsonl
+testes_ia/resultado_casos.md
+.DS_Store

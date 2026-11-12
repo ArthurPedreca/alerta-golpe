@@ -1,0 +1,17 @@
+services:
+  api:
+    build: ./backend
+    env_file: .env
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend/dados:/app/dados   # avaliações dos cidadãos ficam fora do container
+
+  web:
+    build: ./frontend
+    environment:
+      - API_URL=http://api:8000   # dentro do compose o front acha a API pelo nome do serviço
+    ports:
+      - "8501:8501"
+    depends_on:
+      - api
